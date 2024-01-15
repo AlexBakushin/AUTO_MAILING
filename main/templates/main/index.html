@@ -1,82 +1,37 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <style>
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-
-    footer {
-        margin-top: auto;
-    }
-</style>
-</head>
-<body>
-<header>
-    <br>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-
-            <ul class="navbar-nav">
-
-                <li class="nav-item">
-
-                    <a class="nav-link" href="#">Главная</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Зарегистрироваться</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+{% extends 'main/base.html' %}
+{% block content %}
 <div class="jumbotron  text-center">
     <h1 class="display-3">Главная страница</h1>
     <p class="lead"></p>
 
-        <div class="container text-center">
-            <br>
-            <div class="row">
-                <div class="col">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Создать рассылку</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Список рассылок</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Отчет по рассылкам</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Расписание рассылок</a>
-                        </li>
-                        <li class="list-group-item">
-                            <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Список клиентов</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="container text-center">
+        <br>
+        <div class="row">
+            <div class="col">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:50%">Создать
+                            рассылку</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:massage_list' %}" style="width:50%">Список
+                            рассылок</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Отчет по
+                            рассылкам</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Расписание
+                            рассылок</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="#" style="width:50%">Список
+                            клиентов</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </div>
 </div>
-
-<footer class="bg-dark text-light  p-4">
-    &copy; 2023 Bootstrap Template
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% endblock %}

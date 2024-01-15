@@ -1,15 +1,15 @@
 from django.urls import path
 from main.apps import MainConfig
-from main.views import index
-
+from main.views import index, MassageListView, MassageDetailView, MassageCreateView, MassageUpdateView, \
+    MassageDeleteView
 
 app_name = MainConfig.name
 
 urlpatterns = [
     path('', index, name='index'),
-    # path('contacts/', contacts, name='contacts'),
-    # path('product/<slug:slug>/', ProductDetailView.as_view(), name='product'),
-    # path('create/', ProductCreateView.as_view(), name='create_product'),
-    # path('edit/<slug:slug>/', ProductUpdateView.as_view(), name='update_product'),
-    # path('delete/<slug:slug>/', ProductDeleteView.as_view(), name='delete_product')
+    path('massages/', MassageListView.as_view(), name='massage_list'),
+    path('view/<int:pk>/', MassageDetailView.as_view(), name='massage_view'),
+    path('create/', MassageCreateView.as_view(), name='massage_create'),
+    path('edit/<int:pk>/', MassageUpdateView.as_view(), name='massage_update'),
+    path('delete/<int:pk>/', MassageDeleteView.as_view(), name='massage_delete')
 ]

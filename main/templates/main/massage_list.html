@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="jumbotron  text-center">
+    <h1 class="display-3">Список рассылок</h1>
+    <p class="lead"></p>
 
-</body>
-</html>
+    <div class="container text-center">
+        <br>
+        <div class="row">
+            <div class="col">
+                <ul class="list-group">
+                    {% for object in object_list %}
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:massage_view' object.pk %}" style="width:50%">
+                        {{ object.head }} : {{ object.body }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                     <li class="list-group-item">
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:50%">Создать
+                            рассылку</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

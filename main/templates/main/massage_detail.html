@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="col-6 mx-auto d-flex justify-content-center align-items-center">
+    <br>
+    <div class="card mb-4 box-shadow">
 
-</body>
-</html>
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal text-center">{{ object.head | title }}</h4>
+        </div>
+
+        <div class="card-body">
+            <h4 class="card-title pricing-card-title">{{object.body}}</h4>
+            <br>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3 text-center">
+                <li>- Описание - {{object.settings}}</li>
+                <li>- Категория - {{object.logs}}</li>
+            </ul>
+
+            <a href="{% url 'main:massage_list'%}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+
+            <a href="{% url 'main:massage_update' object.pk %}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Редактировать</a>
+
+            <a href="{% url 'main:massage_delete' object.pk %}" type="button"
+               class="btn btn-lg btn-block btn-outline-danger">Удалить</a>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
