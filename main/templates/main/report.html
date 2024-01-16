@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="jumbotron  text-center">
+    <h1 class="display-3">Отчет по рассылкам</h1>
+    <p class="lead"></p>
 
-</body>
-</html>
+    <div class="container text-center">
+        <br>
+        <div class="row">
+            <div class="col">
+                <table class="table" style="">
+                    <thead>
+                    <tr>
+                        <th> ID Рассылки</th>
+                        <th>Тема рассылки</th>
+                        <th>Клиенты</th>
+                        <th>Заданное время рассылки</th>
+                        <th>Периодичность рассылки</th>
+                        <th>Статус рассылки</th>
+                        <th>Время и дата последней попытки</th>
+                        <th>Статус попытки</th>
+                        <th>Ответ сервера</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for object in object_list %}
+                    <tr>
+                        <th scope="row">{{ object.pk }}</th>
+                        <td>{{ object.head }}</td>
+
+                        <td>
+                            {% if object.client.all %}
+                            {% for cl in object.client.all %}
+                            {{ cl }}
+                            {% endfor %}
+                            {% else %}
+                            --------
+                            {% endif %}
+                        </td>
+
+                        <td>{{ object.settings.time }}</td>
+                        <td>{{ object.settings.frequency }}</td>
+                        <td>{{ object.settings.status }}</td>
+                        <td>{{ object.logs.status }}</td>
+                        <td>{{ object.logs.response }}</td>
+                        <td>{{ object.logs.datatime }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{% url 'main:index'%}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

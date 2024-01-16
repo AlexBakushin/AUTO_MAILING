@@ -6,7 +6,7 @@
         <div class="col-4">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h3 class="card-title">Создание сообщения</h3>
+                    <h3 class="card-title">Запись клиента</h3>
                 </div>
                 {% csrf_token %}
 
@@ -30,7 +30,7 @@
                     {% if object %}
                     Обновить
                     {% else %}
-                    Создать
+                    Записать
                     {% endif %}
                 </button>
             </div>
