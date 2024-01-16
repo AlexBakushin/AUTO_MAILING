@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% block content %}
 <div class="jumbotron  text-center">
-    <h1 class="display-3">Список рассылок</h1>
+    <h1 class="display-3">Список клиентов</h1>
     <p class="lead"></p>
 
     <div class="container text-center">
@@ -11,14 +11,14 @@
                 <ul class="list-group">
                     {% for object in object_list %}
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:massage_view' object.pk %}" style="width:50%">
-                        {{ object.head }} : {{ object.body }}
+                        <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:client_view' object.pk %}" style="width:50%">
+                        {{ object.mail }}
                         </a>
                     </li>
                     {% endfor %}
                      <li class="list-group-item">
-                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:50%">Создать
-                            рассылку</a>
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:client_create' %}" style="width:50%">Записать
+                            клиента</a>
                     </li>
                 </ul>
                 <a href="{% url 'main:index'%}" type="button"
