@@ -11,20 +11,13 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Settings)
 class SettingsAdmin(admin.ModelAdmin):
-    list_display = ('time', 'frequency', 'status',)
+    list_display = ('time', 'frequency', 'status')
     list_filter = ('status',)
     search_fields = ('status', 'frequency',)
 
 
 @admin.register(Massage)
 class MassageAdmin(admin.ModelAdmin):
-    list_display = ('head', 'body', 'settings',)
+    list_display = ('head', 'body',)
     list_filter = ('head',)
     search_fields = ('head',)
-
-
-@admin.register(Logs)
-class LogsAdmin(admin.ModelAdmin):
-    list_display = ('datatime', 'status', 'response',)
-    list_filter = ('status',)
-    search_fields = ('status', 'response',)

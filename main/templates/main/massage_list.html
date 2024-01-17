@@ -12,12 +12,12 @@
                     {% for object in object_list %}
                     <li class="list-group-item">
                         <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:massage_view' object.pk %}" style="width:50%">
-                        {{ object.head }} : {{ object.body }}
+                        {{ object.head }} : {{ object.body|slice:30}}
                         </a>
                     </li>
                     {% endfor %}
                      <li class="list-group-item">
-                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:50%">Создать
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:25%">Создать
                             рассылку</a>
                     </li>
                 </ul>
