@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="jumbotron  text-center">
+    <h1 class="display-3">Список настроек</h1>
+    <p class="lead"></p>
+
+    <div class="container text-center">
+        <br>
+        <div class="row">
+            <div class="col">
+                <ul class="list-group">
+                    {% for object in object_list %}
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:settings_view' object.pk %}" style="width:50%">
+                        {{ object.time }} {{ object.frequency }} ({{ object.status }})
+                        </a>
+                    </li>
+                    {% endfor %}
+                     <li class="list-group-item">
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:settings_create' %}" style="width:25%">Создать
+                            настройку</a>
+                    </li>
+                </ul>
+                <a href="{% url 'main:index'%}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

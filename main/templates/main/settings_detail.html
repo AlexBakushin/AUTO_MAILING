@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="col-6 mx-auto d-flex justify-content-center align-items-center">
+    <br>
+    <div class="card mb-4 box-shadow">
+
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal text-center">{{ object.time }}</h4>
+        </div>
+
+        <div class="card-body">
+            <h4 class="card-title pricing-card-title text-center">{{object.frequency}} {{object.status}}</h4>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3 text-center">
+                <li>Клиенты:</li>
+                {% for cl in object.client.all %}
+                <li> -- {{ cl }} -- </li>
+                {% endfor %}
+                <li>Сообщения:</li>
+                {% for ms in object.massage.all %}
+                <li> -- {{ ms }} -- </li>
+                {% endfor %}
+            </ul>
+
+            <a href="{% url 'main:settings_list'%}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+
+            <a href="{% url 'main:settings_update' object.pk %}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Редактировать</a>
+
+            <a href="{% url 'main:settings_delete' object.pk %}" type="button"
+               class="btn btn-lg btn-block btn-outline-danger">Удалить</a>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

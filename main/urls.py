@@ -2,7 +2,7 @@ from django.urls import path
 from main.apps import MainConfig
 from main.views import index, MassageListView, MassageDetailView, MassageCreateView, MassageUpdateView, \
     MassageDeleteView, SettingsReportListView, ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, \
-    ClientDeleteView
+    ClientDeleteView, SettingsListView, SettingsDetailView, SettingsCreateView, SettingsUpdateView, SettingsDeleteView
 
 app_name = MainConfig.name
 
@@ -18,5 +18,10 @@ urlpatterns = [
     path('client/view/<int:pk>/', ClientDetailView.as_view(), name='client_view'),
     path('client/create/', ClientCreateView.as_view(), name='client_create'),
     path('client/edit/<int:pk>/', ClientUpdateView.as_view(), name='client_update'),
-    path('client/delete/<int:pk>/', ClientDeleteView.as_view(), name='client_delete')
+    path('client/delete/<int:pk>/', ClientDeleteView.as_view(), name='client_delete'),
+    path('settings/', SettingsListView.as_view(), name='settings_list'),
+    path('settings/view/<int:pk>/', SettingsDetailView.as_view(), name='settings_view'),
+    path('settings/create/', SettingsCreateView.as_view(), name='settings_create'),
+    path('settings/edit/<int:pk>/', SettingsUpdateView.as_view(), name='settings_update'),
+    path('settings/delete/<int:pk>/', SettingsDeleteView.as_view(), name='settings_delete')
 ]

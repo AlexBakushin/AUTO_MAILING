@@ -7,11 +7,11 @@
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
-                        <p>Удалить клиента "{{object.mail|title}}"?</p>
+                        <p>Удалить данные настройки?</p>
                         <button type="submit" class="btn btn-success">
                             Подтвердить
                         </button>
-                        <a href="{% url 'main:client_view' object.pk %}" class="btn btn-danger">Отмена</a>
+                        <a href="{% url 'main:settings_view' object.pk %}" class="btn btn-danger">Отмена</a>
                     </form>
                 </div>
             </div>
