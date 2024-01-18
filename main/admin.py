@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import Client, Settings, Massage
+from main.models import Client, Settings, Massage, Logs
 
 
 @admin.register(Client)
@@ -21,3 +21,10 @@ class MassageAdmin(admin.ModelAdmin):
     list_display = ('head', 'body',)
     list_filter = ('head',)
     search_fields = ('head',)
+
+
+@admin.register(Logs)
+class LogsAdmin(admin.ModelAdmin):
+    list_display = ('datatime', 'status', 'response',)
+    list_filter = ('datatime',)
+    search_fields = ('datatime',)

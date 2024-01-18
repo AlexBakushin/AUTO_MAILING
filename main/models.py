@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 NULLABLE = {'blank': True, 'null': True}  # шаблон для необязательного элемента
 
@@ -26,7 +27,7 @@ class Logs(models.Model):
 class Massage(models.Model):
     head = models.CharField(max_length=150, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
-    logs = models.ForeignKey(Logs, on_delete=models.CASCADE, verbose_name='Логи', **NULLABLE)
+    logs = models.ManyToManyField(Logs, verbose_name='Логи', **NULLABLE)
 
     def __str__(self):
         return f'{self.head}'
@@ -64,7 +65,7 @@ class Settings(models.Model):
         ('once_a_month', 'Раз в месяц')
     ]
 
-    time = models.DateTimeField(verbose_name='Время рассылки', **NULLABLE)
+    time = models.DateTimeField(verbose_name='Время рассылки', default=datetime.now())
     frequency = models.CharField(default='Раз в день', choices=FREQUENCY_TYPES, verbose_name='Периодичность')
     status = models.CharField(max_length=10, default='created', choices=STATUS_TYPES, verbose_name='Статус')
     client = models.ManyToManyField(Client, verbose_name='Клиенты',)

@@ -24,30 +24,44 @@
                     </thead>
                     <tbody>
                     {% for settings in object_list.all%}
-                        {% for massage in settings.massage.all %}
+                    {% for massage in settings.massage.all %}
+                    <tr>
+                        <th scope="row">{{ massage.pk }}</th>
+                        <td>{{ massage.head }}</td>
 
-                        <tr>
-                            <th scope="row">{{ massage.pk }}</th>
-                            <td>{{ massage.head }}</td>
+                        <td>
+                            {% if settings.client.all %}
+                            {% for cl in settings.client.all %}
+                            {{ cl }}
+                            {% endfor %}
+                            {% else %}
+                            --------
+                            {% endif %}
+                        </td>
 
-                            <td>
-                                {% if settings.client.all %}
-                                    {% for cl in settings.client.all %}
-                                        {{ cl }}
-                                    {% endfor %}
-                                {% else %}
-                                    --------
-                                {% endif %}
-                            </td>
-
-                            <td>{{ settings.time }}</td>
-                            <td>{{ settings.frequency }}</td>
-                            <td>{{ settings.status }}</td>
-                            <td>{{ massage.logs.status }}</td>
-                            <td>{{ massage.logs.response }}</td>
-                            <td>{{ massage.logs.datatime }}</td>
-                        </tr>
-                        {% endfor %}
+                        <td>{{ settings.time }}</td>
+                        <td>{{ settings.frequency }}</td>
+                        <td>{{ settings.status }}</td>
+                        <td>
+                            {% for logs in massage.logs.all %}
+                                {{ logs.datatime }}
+                            <br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for logs in massage.logs.all %}
+                                {{ logs.status }}
+                            <br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for logs in massage.logs.all %}
+                                {{ logs.response }}
+                            <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
                     {% endfor %}
                     </tbody>
                 </table>

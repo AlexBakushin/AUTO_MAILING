@@ -1,13 +1,13 @@
 {% extends 'main/base.html' %}
 {% block content %}
-<div class="col-12">
+<div class="col-12 mx-auto d-flex justify-content-center align-items-center">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
-                        <p>Удалить продукт "{{object.head|title}}"?</p>
+                        <p>Удалить рассылку "{{object.head|title}}"?</p>
                         <button type="submit" class="btn btn-success">
                             Подтвердить
                         </button>

@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="col-12">
+    <form class="row justify-content-center" method="post" enctype="multipart/form-data">
+
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Создание настроек</h3>
+                </div>
+                {% csrf_token %}
+
+
+                {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    <br>
+                    {{ field }}
+                    {% if field.help_text %}
+                    <p class="help" id="{{ field.auto_id }}_helptext">
+                        {{ field.help_text|safe }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+
+                <button type="submit" class="btn btn-lg btn-block btn-success">
+                    {% if object %}
+                    Обновить
+                    {% else %}
+                    Записать
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

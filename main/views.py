@@ -130,3 +130,57 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление "{self.object.mail}"'
         return context
+
+
+class SettingsListView(LoginRequiredMixin, ListView):
+    model = Settings
+    template_name = 'main/settings_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список настроек'
+        return context
+
+
+class SettingsDetailView(LoginRequiredMixin, DetailView):
+    model = Settings
+    template_name = 'main/settings_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.object.time
+        return context
+
+
+class SettingsCreateView(LoginRequiredMixin, CreateView):
+    model = Settings
+    fields = ('time', 'frequency', 'client', 'massage')
+    success_url = reverse_lazy('main:settings_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Создание настройки'
+        return context
+
+
+class SettingsUpdateView(LoginRequiredMixin, UpdateView):
+    model = Settings
+    fields = ('time', 'frequency', 'client', 'massage')
+
+    def get_success_url(self):
+        return reverse('main:settings_view', args=[self.kwargs.get('pk')])
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = f'Изменение настройки'
+        return context_data
+
+
+class SettingsDeleteView(LoginRequiredMixin, DeleteView):
+    model = Settings
+    success_url = reverse_lazy('main:settings_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'Удаление настройки'
+        return context

@@ -11,54 +11,78 @@ from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 from django.core.mail import send_mail
 
-from main.models import Logs, Settings
+from main.models import Settings
 
 logger = logging.getLogger(__name__)
 
 
 def my_job():
-    timezone.activate('UTC')
+    timezone.activate('Asia/Yekaterinburg')
     today = datetime.now()
-    moscow_tz = pytz.timezone('UTC')
+    moscow_tz = pytz.timezone('Asia/Yekaterinburg')
     today = today.astimezone(moscow_tz)
     mail_settings = Settings.objects.all()
-    result = ''
+    result = 0
 
     for setting in mail_settings:
         if today >= setting.time and setting.status == 'created' and setting.frequency == 'once_a_day':
             for client in setting.client.all():
-                result = send_mail(
-                    subject=setting.massage.head,
-                    message=setting.massage.body,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[client.mail],
-                )
+                massages = setting.massage.all()
+                for massage in massages:
+                    try:
+                        result += 1
+                        send_mail(
+                            subject=massage.head,
+                            message=massage.body,
+                            from_email=settings.EMAIL_HOST_USER,
+                            recipient_list=[client.mail],
+                        )
+                    except:
+                        result = 'Error'
+
+                    massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
+                                        response=result)
             setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=1)
             setting.save()
-            Logs.objects.create(datatime=datetime.now().astimezone(moscow_tz), status='finish', response=result)
+
         elif today >= setting.time and setting.status and setting.frequency == 'once_a_week':
             for client in setting.client.all():
-                send_mail(
-                    subject=setting.massage.head,
-                    message=setting.massage.body,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[client.mail],
+                massages = setting.massage.all()
+                for massage in massages:
+                    try:
+                        result += 1
+                        send_mail(
+                            subject=massage.head,
+                            message=massage.body,
+                            from_email=settings.EMAIL_HOST_USER,
+                            recipient_list=[client.mail],
+                        )
+                    except:
+                        result = 'Error'
 
-                )
-            setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=7)
+                    massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
+                                        response=result)
+            setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=1)
             setting.save()
-            Logs.objects.create(datatime=datetime.now().astimezone(moscow_tz), status='finish', response=result)
         elif today >= setting.time and setting.status and setting.frequency == 'once_a_month':
             for client in setting.client.all():
-                send_mail(
-                    subject=setting.massage.head,
-                    message=setting.massage.body,
-                    from_email=settings.EMAIL_HOST_USER,
-                    recipient_list=[client.mail],
-                )
+                massages = setting.massage.all()
+                for massage in massages:
+                    try:
+                        result += 1
+                        send_mail(
+                            subject=massage.head,
+                            message=massage.body,
+                            from_email=settings.EMAIL_HOST_USER,
+                            recipient_list=[client.mail],
+                        )
+                    except:
+                        result = 'Error'
+
+                    massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
+                                        response=result)
             setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=30)
             setting.save()
-            Logs.objects.create(datatime=datetime.now().astimezone(moscow_tz), status='finish', response=result)
 
 
 @util.close_old_connections
