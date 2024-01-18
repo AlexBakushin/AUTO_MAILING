@@ -3,9 +3,30 @@ from django.db import models
 NULLABLE = {'blank': True, 'null': True}  # шаблон для необязательного элемента
 
 
+class Logs(models.Model):
+
+    STATUS_TYPES = [
+        ('start', 'Запущена'),
+        ('finish', 'Завершена'),
+        ('created', 'Создана')
+    ]
+
+    datatime = models.DateTimeField(verbose_name='Время и дата последней попытки', auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS_TYPES, default='created', verbose_name='Статус')
+    response = models.CharField(max_length=100, verbose_name='Ответ сервера', )
+
+    def __str__(self):
+        return f'{self.status}, {self.response}, {self.datatime}'
+
+    class Meta:
+        verbose_name = 'Логи'
+        verbose_name_plural = 'Логи'
+
+
 class Massage(models.Model):
     head = models.CharField(max_length=150, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
+    logs = models.ForeignKey(Logs, on_delete=models.CASCADE, verbose_name='Логи', **NULLABLE)
 
     def __str__(self):
         return f'{self.head}'
@@ -47,7 +68,7 @@ class Settings(models.Model):
     frequency = models.CharField(default='Раз в день', choices=FREQUENCY_TYPES, verbose_name='Периодичность')
     status = models.CharField(max_length=10, default='created', choices=STATUS_TYPES, verbose_name='Статус')
     client = models.ManyToManyField(Client, verbose_name='Клиенты',)
-    massage = models.ForeignKey(Massage, on_delete=models.CASCADE, verbose_name='Письмо', blank=True, null=True)
+    massage = models.ManyToManyField(Massage, verbose_name='Письма',)
 
     def __str__(self):
         return f'{self.time}, {self.frequency}, {self.status}'
@@ -55,23 +76,3 @@ class Settings(models.Model):
     class Meta:
         verbose_name = 'Настройка'
         verbose_name_plural = 'Настройки'
-
-
-class Logs(models.Model):
-
-    STATUS_TYPES = [
-        ('start', 'Запущена'),
-        ('finish', 'Завершена'),
-        ('created', 'Создана')
-    ]
-
-    datatime = models.DateTimeField(verbose_name='Время и дата последней попытки', auto_now=True)
-    status = models.CharField(max_length=10, choices=STATUS_TYPES, default='created', verbose_name='Статус')
-    response = models.CharField(max_length=100, verbose_name='Ответ сервера', )
-
-    def __str__(self):
-        return f'{self.status}, {self.response}, {self.datatime}'
-
-    class Meta:
-        verbose_name = 'Логи'
-        verbose_name_plural = 'Логи'

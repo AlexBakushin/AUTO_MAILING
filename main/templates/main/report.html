@@ -23,33 +23,36 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for object in object_list %}
-                    <tr>
-                        <th scope="row">{{ object.pk }}</th>
-                        <td>{{ object.head }}</td>
+                    {% for settings in object_list.all%}
+                        {% for massage in settings.massage.all %}
 
-                        <td>
-                            {% if object.client.all %}
-                            {% for cl in object.client.all %}
-                            {{ cl }}
-                            {% endfor %}
-                            {% else %}
-                            --------
-                            {% endif %}
-                        </td>
+                        <tr>
+                            <th scope="row">{{ massage.pk }}</th>
+                            <td>{{ massage.head }}</td>
 
-                        <td>{{ object.settings.time }}</td>
-                        <td>{{ object.settings.frequency }}</td>
-                        <td>{{ object.settings.status }}</td>
-                        <td>{{ object.logs.status }}</td>
-                        <td>{{ object.logs.response }}</td>
-                        <td>{{ object.logs.datatime }}</td>
-                    </tr>
+                            <td>
+                                {% if settings.client.all %}
+                                    {% for cl in settings.client.all %}
+                                        {{ cl }}
+                                    {% endfor %}
+                                {% else %}
+                                    --------
+                                {% endif %}
+                            </td>
+
+                            <td>{{ settings.time }}</td>
+                            <td>{{ settings.frequency }}</td>
+                            <td>{{ settings.status }}</td>
+                            <td>{{ massage.logs.status }}</td>
+                            <td>{{ massage.logs.response }}</td>
+                            <td>{{ massage.logs.datatime }}</td>
+                        </tr>
+                        {% endfor %}
                     {% endfor %}
                     </tbody>
                 </table>
                 <a href="{% url 'main:index'%}" type="button"
-               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+                   class="btn btn-lg btn-block btn-outline-primary">Назад</a>
             </div>
         </div>
     </div>
