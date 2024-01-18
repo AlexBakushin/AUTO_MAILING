@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from main.models import Massage, Client
+from main.models import Massage, Client, Settings
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -14,8 +14,8 @@ def index(request):
     return render(request, 'main/index.html', context)
 
 
-class MassageReportListView(LoginRequiredMixin, ListView):
-    model = Massage
+class SettingsReportListView(LoginRequiredMixin, ListView):
+    model = Settings
     template_name = 'main/report.html'
 
     def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class MassageDetailView(LoginRequiredMixin, DetailView):
 
 class MassageCreateView(LoginRequiredMixin, CreateView):
     model = Massage
-    fields = ('head', 'body', 'settings', 'logs', 'client',)
+    fields = ('head', 'body',)
     success_url = reverse_lazy('main:massage_list')
 
     def get_context_data(self, **kwargs):
@@ -57,7 +57,7 @@ class MassageCreateView(LoginRequiredMixin, CreateView):
 
 class MassageUpdateView(LoginRequiredMixin, UpdateView):
     model = Massage
-    fields = ('head', 'body', 'settings', 'logs' 'client',)
+    fields = ('head', 'body',)
 
     def get_success_url(self):
         return reverse('main:massage_view', args=[self.kwargs.get('pk')])

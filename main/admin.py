@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main.models import Client, Settings, Massage, Logs
+from main.models import Client, Settings, Massage
 
 
 @admin.register(Client)
