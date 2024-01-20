@@ -10,13 +10,13 @@
             <div class="col">
                 <ul class="list-group">
                     {% for object in object_list %}
-                    {% if user == object.user %}
-                    <li class="list-group-item">
-                        <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:client_view' object.pk %}" style="width:50%">
-                        {{ object.mail }}
-                        </a>
-                    </li>
-                    {% endif %}
+
+                            <li class="list-group-item">
+                                <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:client_view' object.pk %}" style="width:50%">
+                                {{ object.mail }}
+                                </a>
+                            </li>
+
                     {% endfor %}
                      <li class="list-group-item">
                         <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:client_create' %}" style="width:25%">Записать

@@ -11,24 +11,36 @@
         <div class="card-body">
             <h4 class="card-title pricing-card-title text-center">{{object.frequency}} {{object.status}}</h4>
             <ul class="list-unstyled mt-3 mb-4 text-start m-3 text-center">
+                <li>Хозяин:</li>
+                 <li>{{object.user}}</li>
                 <li>Клиенты:</li>
+                {%if object.client.all%}
                 {% for cl in object.client.all %}
                 <li> -- {{ cl }} -- </li>
                 {% endfor %}
+                {%else%}
+                ---------
+                {%endif%}
                 <li>Сообщения:</li>
+                {%if object.massage.all%}
                 {% for ms in object.massage.all %}
                 <li> -- {{ ms }} -- </li>
                 {% endfor %}
+                {%else%}
+                ---------
+                {%endif%}
             </ul>
 
             <a href="{% url 'main:settings_list'%}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">Назад</a>
 
+             {% if user.is_superuser or user == object.user %}
             <a href="{% url 'main:settings_update' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-primary">Редактировать</a>
 
             <a href="{% url 'main:settings_delete' object.pk %}" type="button"
                class="btn btn-lg btn-block btn-outline-danger">Удалить</a>
+            {% endif %}
 
         </div>
     </div>
