@@ -69,4 +69,4 @@ def generate_new_password(request):
     )
     request.user.set_password(new_password)
     request.user.save()
-    return redirect(reverse('catalog:home'))
+    return redirect(reverse('main:index'))
