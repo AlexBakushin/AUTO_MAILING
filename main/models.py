@@ -1,11 +1,11 @@
 from django.db import models
 from datetime import datetime
+from django.conf import settings
 
 NULLABLE = {'blank': True, 'null': True}  # шаблон для необязательного элемента
 
 
 class Logs(models.Model):
-
     STATUS_TYPES = [
         ('start', 'Запущена'),
         ('finish', 'Завершена'),
@@ -43,6 +43,8 @@ class Client(models.Model):
     sur_name = models.CharField(max_length=150, verbose_name='Отчество', **NULLABLE)
     mail = models.EmailField(unique=True, verbose_name='Почта')
     description = models.TextField(verbose_name='Описание', **NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                             verbose_name='Пользователь')
 
     def __str__(self):
         return f'{self.mail}'
@@ -68,8 +70,8 @@ class Settings(models.Model):
     time = models.DateTimeField(verbose_name='Время рассылки', default=datetime.now())
     frequency = models.CharField(default='Раз в день', choices=FREQUENCY_TYPES, verbose_name='Периодичность')
     status = models.CharField(max_length=10, default='created', choices=STATUS_TYPES, verbose_name='Статус')
-    client = models.ManyToManyField(Client, verbose_name='Клиенты',)
-    massage = models.ManyToManyField(Massage, verbose_name='Письма',)
+    client = models.ManyToManyField(Client, verbose_name='Клиенты', )
+    massage = models.ManyToManyField(Massage, verbose_name='Письма', )
 
     def __str__(self):
         return f'{self.time}, {self.frequency}, {self.status}'
