@@ -108,12 +108,28 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
         context['title'] = 'Запись клиента'
         return context
 
+    def form_valid(self, form):
+        """
+        Для автоматического выставления хозяина при регистрации нового пользователя
+        :param form:
+        :return:
+        """
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     fields = ('first_name', 'last_name', 'sur_name', 'description',)
 
     def get_success_url(self):
+        """
+        Перенаправления после сохранения
+        :return:
+        """
         return reverse('main:client_view', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
