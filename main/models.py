@@ -28,6 +28,8 @@ class Massage(models.Model):
     head = models.CharField(max_length=150, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
     logs = models.ManyToManyField(Logs, verbose_name='Логи', **NULLABLE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                             verbose_name='Пользователь')
 
     def __str__(self):
         return f'{self.head}'
@@ -72,6 +74,8 @@ class Settings(models.Model):
     status = models.CharField(max_length=10, default='created', choices=STATUS_TYPES, verbose_name='Статус')
     client = models.ManyToManyField(Client, verbose_name='Клиенты', )
     massage = models.ManyToManyField(Massage, verbose_name='Письма', )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,
+                             verbose_name='Пользователь')
 
     def __str__(self):
         return f'{self.time}, {self.frequency}, {self.status}'

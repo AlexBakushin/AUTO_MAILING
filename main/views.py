@@ -54,6 +54,18 @@ class MassageCreateView(LoginRequiredMixin, CreateView):
         context['title'] = 'Создание сообщения'
         return context
 
+    def form_valid(self, form):
+        """
+        Для автоматического выставления хозяина при регистрации нового пользователя
+        :param form:
+        :return:
+        """
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
 
 class MassageUpdateView(LoginRequiredMixin, UpdateView):
     model = Massage
@@ -177,6 +189,32 @@ class SettingsCreateView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создание настройки'
         return context
+
+    def form_valid(self, form):
+        """
+        Для автоматического выставления хозяина при регистрации нового пользователя
+        :param form:
+        :return:
+        """
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
+
+        return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        """
+        Было пипец как сложно до этого дойти, но у меня получилось
+        эта функция фильтрует выборку клиентов и сообщения, на те, чей создатель - текущий пользователь
+        + проверка на админа
+        """
+        form = super(SettingsCreateView, self).get_form(form_class)
+        if not self.request.user.is_superuser:
+            form.fields['client'].queryset = Client.objects.filter(user=self.request.user)
+            form.fields['massage'].queryset = Massage.objects.filter(user=self.request.user)
+            return form
+        else:
+            return form
 
 
 class SettingsUpdateView(LoginRequiredMixin, UpdateView):

@@ -10,21 +10,45 @@
                 </div>
                 {% csrf_token %}
 
-
-                {% for field in form %}
                 <div class="fieldWrapper">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
+                    {{ form.time.errors }}
+                    {{ form.time.label_tag }}
                     <br>
-                    {{ field }}
-                    {% if field.help_text %}
-                    <p class="help" id="{{ field.auto_id }}_helptext">
-                        {{ field.help_text|safe }}
-                    </p>
+                    {{ form.time }}
+                    {% if form.time.help_text %}
+                    <p class="help" id="{{ form.time.auto_id }}_helptext">{{ form.time.help_text|safe }}</p>
                     {% endif %}
                 </div>
-                {% endfor %}
 
+                <div class="fieldWrapper">
+                    {{ form.frequency.errors }}
+                    {{ form.frequency.label_tag }}
+                    <br>
+                    {{ form.frequency }}
+                    {% if form.frequency.help_text %}
+                    <p class="help" id="{{ form.frequency.auto_id }}_helptext">{{ form.frequency.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+
+                    <div class="fieldWrapper">
+                        {{ form.client.errors }}
+                        {{ form.client.label_tag }}
+                        <br>
+                        {{ form.client }}
+                        {% if form.client.help_text %}
+                        <p class="help" id="{{ form.client.auto_id }}_helptext">{{ form.client.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="fieldWrapper">
+                        {{ form.massage.errors }}
+                        {{ form.massage.label_tag }}
+                        <br>
+                        {{ form.massage }}
+                        {% if form.massage.help_text %}
+                        <p class="help" id="{{ form.massage.auto_id }}_helptext">{{ form.massage.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
 
                 <button type="submit" class="btn btn-lg btn-block btn-success">
                     {% if object %}
@@ -32,7 +56,11 @@
                     {% else %}
                     Записать
                     {% endif %}
+
                 </button>
+                <br>
+                <a href="{% url 'main:settings_list'%}" type="button"
+               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
             </div>
         </div>
     </form>
