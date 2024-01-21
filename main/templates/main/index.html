@@ -1,6 +1,30 @@
 {% extends 'main/base.html' %}
 {% block content %}
-<div class="jumbotron  text-center">
+<div style="display: flex;">
+  <div class="rol-12">
+    <ul>
+      <li>Всего рассылок: {{all_massage}}</li>
+      <li>Активных рассылок: {{active_massage}}</li>
+      <li>Количество клиентов: {{all_client}}</li>
+    </ul>
+  </div>
+  <div class="rol-12"  style="margin-left: 700px;">
+    <ul class="message-list">
+        {%for bl in blog%}
+            <li class="message">
+                <a type="button" class="btn btn-outline-primary" href="{% url 'blog:view' bl.pk %}" style="width: 400px;">
+                    <span style="font-size: 18px;">{{bl.title|slice:':20' }}...</span>
+                    <br>
+                    <span style="font-size: 18px;">{{bl.body|slice:':50'}}...</span>
+                    <br>
+                </a>
+            </li>
+        {%endfor%}
+    </ul>
+  </div>
+</div>
+
+<div class="text-center">
     <h1 class="display-3">Главная страница</h1>
     <p class="lead"></p>
 
@@ -10,20 +34,24 @@
             <div class="col">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:massage_list' %}" style="width:50%">Список
-                            рассылок</a>
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:massage_list' %}"
+                           style="width:50%">Список
+                            рассылок &#9993;</a>
                     </li>
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:settings_list' %}" style="width:50%">Список
-                            настроек</a>
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:client_list' %}"
+                           style="width:50%">Список
+                            клиентов &#128104;</a>
                     </li>
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:report' %}" style="width:50%">Отчет по
-                            рассылкам</a>
+                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:settings_list' %}"
+                           style="width:50%">Список
+                            настроек &#127899;</a>
                     </li>
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-primary btn-block mb-2" href="{% url 'main:client_list' %}" style="width:50%">Список
-                            клиентов</a>
+                        <a type="button" class="btn btn-info btn-block mb-2" href="{% url 'main:report' %}"
+                           style="width:50%">Отчет по
+                            рассылкам &#128269;</a>
                     </li>
                 </ul>
             </div>

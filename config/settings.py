@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'main',
     "django_apscheduler",
     'users',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +90,6 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASES_PASSWORD')
     }
 }
-
 
 
 # Password validation

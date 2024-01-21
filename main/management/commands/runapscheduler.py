@@ -22,15 +22,14 @@ def my_job():
     moscow_tz = pytz.timezone('Asia/Yekaterinburg')
     today = today.astimezone(moscow_tz)
     mail_settings = Settings.objects.all()
-    result = 0
 
     for setting in mail_settings:
-        if today >= setting.time and setting.status == 'created' and setting.frequency == 'once_a_day':
+        if today >= setting.time and setting.status == 'start' and setting.frequency == 'once_a_day':
             for client in setting.client.all():
                 massages = setting.massage.all()
                 for massage in massages:
                     try:
-                        result += 1
+                        result = 1
                         send_mail(
                             subject=massage.head,
                             message=massage.body,
@@ -50,7 +49,7 @@ def my_job():
                 massages = setting.massage.all()
                 for massage in massages:
                     try:
-                        result += 1
+                        result = 1
                         send_mail(
                             subject=massage.head,
                             message=massage.body,
@@ -69,7 +68,7 @@ def my_job():
                 massages = setting.massage.all()
                 for massage in massages:
                     try:
-                        result += 1
+                        result = 1
                         send_mail(
                             subject=massage.head,
                             message=massage.body,
