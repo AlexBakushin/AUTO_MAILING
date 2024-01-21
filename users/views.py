@@ -58,16 +58,3 @@ class ProfileView(LoginRequiredMixin, UpdateView):
                 self.object.save()
 
         return super().form_valid(form)
-
-
-def generate_new_password(request):
-    new_password = ''.join([str(random.randint(0, 9)) for _ in range(12)])
-    send_mail(
-        subject='Вы сменили пароль!',
-        message=f'Вaш новый пароль {new_password}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[request.user.email]
-    )
-    request.user.set_password(new_password)
-    request.user.save()
-    return redirect(reverse('main:index'))

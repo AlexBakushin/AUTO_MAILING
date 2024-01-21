@@ -71,7 +71,7 @@ class Settings(models.Model):
 
     time = models.DateTimeField(verbose_name='Время рассылки', default=datetime.now())
     frequency = models.CharField(default='Раз в день', choices=FREQUENCY_TYPES, verbose_name='Периодичность')
-    status = models.CharField(max_length=10, default='created', choices=STATUS_TYPES, verbose_name='Статус')
+    status = models.CharField(max_length=10, default='start', choices=STATUS_TYPES, verbose_name='Статус')
     client = models.ManyToManyField(Client, verbose_name='Клиенты', )
     massage = models.ManyToManyField(Massage, verbose_name='Письма', )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, **NULLABLE,

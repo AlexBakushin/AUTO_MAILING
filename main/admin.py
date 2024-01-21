@@ -1,5 +1,6 @@
 from django.contrib import admin
 from main.models import Client, Settings, Massage, Logs
+from blog.models import Blog
 
 
 @admin.register(Client)
@@ -28,3 +29,8 @@ class LogsAdmin(admin.ModelAdmin):
     list_display = ('datatime', 'status', 'response',)
     list_filter = ('datatime',)
     search_fields = ('datatime',)
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'body',)

@@ -11,24 +11,33 @@
                 <table class="table" style="">
                     <thead>
                     <tr>
-                        <th> ID Рассылки</th>
+                        <th>ID Рассылки</th>
                         <th>Тема рассылки</th>
-                        <th>Клиенты</th>
-                        <th>Заданное время рассылки</th>
                         <th>Периодичность рассылки</th>
                         <th>Статус рассылки</th>
-                        <th>Время и дата последней попытки</th>
+                        <th>Заданное время рассылки</th>
+                        <th>Время последней попытки</th>
+                        <th>Клиенты</th>
                         <th>Статус попытки</th>
                         <th>Ответ сервера</th>
+                        <th>Принадлежность вам</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for settings in object_list.all%}
                     {% for massage in settings.massage.all %}
                     <tr>
-                        <th scope="row">{{ massage.pk }}</th>
+                        <td scope="row">{{ massage.pk }}</td>
                         <td>{{ massage.head }}</td>
-
+                        <td>{{ settings.frequency }}</td>
+                        <td>{{ settings.status }}</td>
+                        <td>{{ settings.time }}</td>
+                        <td>
+                            {% for logs in massage.logs.all %}
+                                {{ logs.datatime }}
+                            <br>
+                            {% endfor %}
+                        </td>
                         <td>
                             {% if settings.client.all %}
                             {% for cl in settings.client.all %}
@@ -37,16 +46,6 @@
                             {% else %}
                             --------
                             {% endif %}
-                        </td>
-
-                        <td>{{ settings.time }}</td>
-                        <td>{{ settings.frequency }}</td>
-                        <td>{{ settings.status }}</td>
-                        <td>
-                            {% for logs in massage.logs.all %}
-                                {{ logs.datatime }}
-                            <br>
-                            {% endfor %}
                         </td>
                         <td>
                             {% for logs in massage.logs.all %}
@@ -59,6 +58,12 @@
                                 {{ logs.response }}
                             <br>
                             {% endfor %}
+                        </td>
+                        <td>
+                             {%if settings.user == user%}
+                            <span style="color: green;">&#10003;</span>
+                            <br>
+                            {%endif%}
                         </td>
                     </tr>
                     {% endfor %}

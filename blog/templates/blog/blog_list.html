@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% load img_tag %}
+{% block content %}
+<div class="row text-center" style="margin: 0 35px;">
+    <p class="lead">Блог</p>
+    <div class="row text-center">
+
+        {% if not user.is_staff or user.is_superuser %}
+        <a class="btn btn-primary" href="{% url 'blog:create' %}">Добавить запись</a>
+        {% endif %}
+
+        <br>
+        {% for object in object_list %}
+        <div class="col-3">
+            <br>
+            <div class="card mb-4 box-shadow">
+
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ object.title | title }}</h4>
+                    <img src="/media/{{ object.preview }}" style="width:200px; height:150px;"/>
+                </div>
+
+                <div class="card-body">
+                    <a class="card-title">{{object.body}}</a>
+                    <br>
+                    <br>
+                    <a href="{% url 'blog:view' object.pk %}" type="button"
+                       class="btn btn-outline-primary text-center">Посмотреть</a>
+                    <br>
+                    {%if object.user == user or user.is_staff%}
+                    <a href="{% url 'blog:edit' object.pk %}" type="button"
+                       class="btn btn-outline-primary">Редактировать</a>
+                    <br>
+                    <a href="{% url 'blog:delete' object.pk %}" type="button"
+                       class="btn btn-outline-danger">Удалить</a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
