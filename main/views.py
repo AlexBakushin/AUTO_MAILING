@@ -6,20 +6,31 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blog.models import Blog
 from users.models import User
+from django.conf import settings
+from django.core.cache import cache
+
 
 
 @login_required
 def index(request):
+    if settings.CACHE_ENABLED:
+        key = f'blog_list'
+        blog_list = cache.get(key)
+        if blog_list is None:
+            blog_list = Blog.objects.all()[:3]
+            cache.set(key, blog_list)
+        else:
+            blog_list = Blog.objects.all()[:3]
+
     all_massage = Massage.objects.count()
     active_massage = Settings.objects.filter(status='start')
     all_client = Client.objects.count()
-    queryset = Blog.objects.all()[:3]
     context = {
         'title': 'Главная',
         'all_massage': all_massage,
         'active_massage': active_massage.count(),
         'all_client': all_client,
-        'blog': queryset,
+        'blog': blog_list,
     }
     return render(request, 'main/index.html', context)
 
