@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blog.models import Blog
+from users.models import User
 
 
 @login_required
@@ -21,6 +22,39 @@ def index(request):
         'blog': queryset,
     }
     return render(request, 'main/index.html', context)
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'main/users_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Пользователи'
+        return context
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'main/user_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'{self.object.email}'
+        return context
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    fields = ('is_active',)
+
+    def get_success_url(self):
+        return reverse('main:user_view', args=[self.kwargs.get('pk')])
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = f'Изменение "{self.object.email}"'
+        return context_data
 
 
 class SettingsReportListView(LoginRequiredMixin, ListView):
@@ -57,6 +91,7 @@ class MassageCreateView(LoginRequiredMixin, CreateView):
     model = Massage
     fields = ('head', 'body',)
     success_url = reverse_lazy('main:massage_list')
+    # permission_required = 'main.add_massage'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -123,6 +158,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     fields = ('first_name', 'last_name', 'sur_name', 'mail', 'description',)
     success_url = reverse_lazy('main:client_list')
+    #permission_required = 'main.add_client'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -193,6 +229,7 @@ class SettingsCreateView(LoginRequiredMixin, CreateView):
     model = Settings
     fields = ('time', 'frequency', 'client', 'massage')
     success_url = reverse_lazy('main:settings_list')
+    # permission_required = 'main.add_settings'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

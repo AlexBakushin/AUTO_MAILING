@@ -1,13 +1,17 @@
 from django.urls import path
 from main.apps import MainConfig
-from main.views import index, MassageListView, MassageDetailView, MassageCreateView, MassageUpdateView, \
-    MassageDeleteView, SettingsReportListView, ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, \
+from main.views import index, UserListView, UserDetailView, MassageListView, MassageDetailView, MassageCreateView, \
+    MassageUpdateView, UserUpdateView, MassageDeleteView, SettingsReportListView, ClientListView, ClientDetailView, \
+    ClientCreateView, ClientUpdateView, \
     ClientDeleteView, SettingsListView, SettingsDetailView, SettingsCreateView, SettingsUpdateView, SettingsDeleteView
 
 app_name = MainConfig.name
 
 urlpatterns = [
     path('', index, name='index'),
+    path('users_list/', UserListView.as_view(), name='users_list'),
+    path('user/view/<int:pk>/', UserDetailView.as_view(), name='user_view'),
+    path('user/edit/<int:pk>/', UserUpdateView.as_view(), name='user_update'),
     path('report/', SettingsReportListView.as_view(), name='report'),
     path('massages/', MassageListView.as_view(), name='massage_list'),
     path('massage/view/<int:pk>/', MassageDetailView.as_view(), name='massage_view'),

@@ -1,14 +1,15 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from blog.models import Blog
 from blog.forms import BlogForm
 
 
-class BlogCreateView(LoginRequiredMixin, CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Blog
     form_class = BlogForm
     success_url = reverse_lazy('blog:list')
+    permission_required = 'blog.add_blog'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,9 +29,10 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class BlogUpdateView(LoginRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Blog
     form_class = BlogForm
+    permission_required = 'blog.change_blog'
 
     def get_success_url(self):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
@@ -65,9 +67,10 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class BlogDeleteView(LoginRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
+    permission_required = 'blog.delete_blog'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

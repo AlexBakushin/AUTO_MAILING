@@ -53,6 +53,12 @@
                            style="width:50%">Отчет по
                             рассылкам &#128269;</a>
                     </li>
+                    {%if user.is_staff%}
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-dark btn-block mb-2" href="{% url 'main:users_list' %}"
+                           style="width:50%">Список пользователей &#128104;</a>
+                    </li>
+                    {%endif%}
                 </ul>
             </div>
         </div>
