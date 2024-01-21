@@ -3,13 +3,14 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from blog.models import Blog
 from blog.forms import BlogForm
+from django.conf import settings
+from django.core.cache import cache
 
 
-class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     form_class = BlogForm
     success_url = reverse_lazy('blog:list')
-    permission_required = 'blog.add_blog'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -29,10 +30,9 @@ class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     form_class = BlogForm
-    permission_required = 'blog.change_blog'
 
     def get_success_url(self):
         return reverse('blog:view', args=[self.kwargs.get('pk')])
@@ -48,6 +48,15 @@ class BlogListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            key = f'big_blog_list'
+            blog_list = cache.get(key)
+            if blog_list is None:
+                blog_list = Blog.objects.all()
+                cache.set(key, blog_list)
+            else:
+                blog_list = Blog.objects.all()
+        context['object'] = blog_list
         context['title'] = 'Блог'
         return context
 
@@ -67,10 +76,9 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
-    permission_required = 'blog.delete_blog'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
