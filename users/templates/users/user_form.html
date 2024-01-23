@@ -2,22 +2,22 @@
 {% load img_tag %}
 {% block content %}
 <div class="col-12">
-            <form class="row" method="post" enctype="multipart/form-data">
-                <div class="col-4"></div>
-                <div class="col-4">
-                    <div class="card mb-4 box-shadow">
-                         <div class="card-header">
-                             <h3 class="card-title">Профиль</h3>
-                         </div>
-                            {% csrf_token %}
-                            <img src="/media/{{ user.avatar }}" style="width:100%; height:300px;"/>
-                            {{ form.as_p }}
-
-                    <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
-                       Сохранить
-                    </button>
-                    </div>
+    <form class="row" method="post" enctype="multipart/form-data">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h3 class="card-title">Профиль</h3>
                 </div>
-            </form>
+                {% csrf_token %}
+                <img src="/media/{{ user.avatar }}" style="width:100%; height:300px;"/>
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-lg btn-block btn-outline-primary">
+                    Сохранить
+                </button>
+            </div>
         </div>
+    </form>
+</div>
 {% endblock %}

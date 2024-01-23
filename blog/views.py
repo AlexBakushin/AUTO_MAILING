@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from blog.models import Blog
@@ -15,8 +15,9 @@ class BlogCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создание блога'
+
         return context
-    
+
     def form_valid(self, form):
         """
         Для автоматического выставления хозяина при регистрации нового пользователя
@@ -40,6 +41,7 @@ class BlogUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Изменение "{self.object.title}"'
+
         return context
 
 
@@ -56,8 +58,10 @@ class BlogListView(LoginRequiredMixin, ListView):
                 cache.set(key, blog_list)
             else:
                 blog_list = Blog.objects.all()
+
         context['object'] = blog_list
         context['title'] = 'Блог'
+
         return context
 
 
@@ -68,11 +72,13 @@ class BlogDetailView(LoginRequiredMixin, DetailView):
         self.object = super().get_object(queryset)
         self.object.view_count += 1
         self.object.save()
+
         return self.object
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.title
+
         return context
 
 
@@ -83,4 +89,5 @@ class BlogDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление "{self.object.title}"'
+
         return context

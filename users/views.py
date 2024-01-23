@@ -1,15 +1,10 @@
-import random
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, UpdateView
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 from django.core.mail import send_mail
 from django.conf import settings
-from django.shortcuts import redirect
-from django.contrib.auth import logout
-
 from users.management.commands.mixins import UserIsNotAuthenticated
 
 
@@ -27,11 +22,13 @@ class RegisterView(UserIsNotAuthenticated, CreateView):
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[new_user.email]
         )
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Регистрация на сайте'
+
         return context
 
 
@@ -46,6 +43,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль'
+
         return context
 
     def form_valid(self, form):
