@@ -22,13 +22,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-info btn-block mb-2" href="{% url 'blog:list'%}">Блог</a>
-                    </li>
+                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link text-light" href="{% url 'users:profile'%}">Профиль</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  href="{% url 'users:logout'%}"  style="color: red;">Выйти</a>
+                    <a class="nav-link" href="{% url 'users:logout'%}" style="color: red;">Выйти</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
@@ -42,7 +42,7 @@
         </div>
     </nav>
 </header>
- <br>
+<br>
 
 {% block content%}
 

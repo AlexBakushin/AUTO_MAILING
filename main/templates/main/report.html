@@ -34,7 +34,7 @@
                         <td>{{ settings.time }}</td>
                         <td>
                             {% for logs in massage.logs.all %}
-                                {{ logs.datatime }}
+                            {{ logs.datatime }}
                             <br>
                             {% endfor %}
                         </td>
@@ -49,18 +49,18 @@
                         </td>
                         <td>
                             {% for logs in massage.logs.all %}
-                                {{ logs.status }}
+                            {{ logs.status }}
                             <br>
                             {% endfor %}
                         </td>
                         <td>
                             {% for logs in massage.logs.all %}
-                                {{ logs.response }}
+                            {{ logs.response }}
                             <br>
                             {% endfor %}
                         </td>
                         <td>
-                             {%if settings.user == user%}
+                            {%if settings.user == user%}
                             <span style="color: green;">&#10003;</span>
                             <br>
                             {%endif%}

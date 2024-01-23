@@ -11,8 +11,9 @@
                 <ul class="list-group">
                     {% for object in object_list %}
                     <li class="list-group-item">
-                        <a type="button" class="btn btn-outline-primary btn-block mb-2" href="{% url 'main:massage_view' object.pk %}" style="width:50%">
-                        {{ object.head }} : {{ object.body|slice:30}}
+                        <a type="button" class="btn btn-outline-primary btn-block mb-2"
+                           href="{% url 'main:massage_view' object.pk %}" style="width:50%">
+                            {{ object.head }} : {{ object.body|slice:30}}
                             {%if object.user == user%}
                             <span style="color: green; float: right;">&#10003;</span>
                             {%endif%}
@@ -20,14 +21,15 @@
                     </li>
                     {% endfor %}
                     {% if not user.is_staff or user.is_superuser %}
-                     <li class="list-group-item">
-                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}" style="width:25%">Создать
+                    <li class="list-group-item">
+                        <a type="button" class="btn btn-success btn-block mb-2" href="{% url 'main:massage_create' %}"
+                           style="width:25%">Создать
                             рассылку</a>
                     </li>
                     {%endif%}
                 </ul>
                 <a href="{% url 'main:index'%}" type="button"
-               class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+                   class="btn btn-lg btn-block btn-outline-primary">Назад</a>
             </div>
         </div>
     </div>

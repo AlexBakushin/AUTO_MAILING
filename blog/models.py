@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 NULLABLE = {'blank': True, 'null': True}  # шаблон для необязательного элемента
 
 

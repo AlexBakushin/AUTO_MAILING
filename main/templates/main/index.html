@@ -1,27 +1,28 @@
 {% extends 'main/base.html' %}
 {% block content %}
 <div style="display: flex;">
-  <div class="rol-12">
-    <ul>
-      <li>Всего рассылок: {{all_massage}}</li>
-      <li>Активных рассылок: {{active_massage}}</li>
-      <li>Количество клиентов: {{all_client}}</li>
-    </ul>
-  </div>
-  <div class="rol-12"  style="margin-left: 700px;">
-    <ul class="message-list">
-        {%for bl in blog%}
+    <div class="rol-12">
+        <ul>
+            <li>Всего рассылок: {{all_massage}}</li>
+            <li>Активных рассылок: {{active_massage}}</li>
+            <li>Количество клиентов: {{all_client}}</li>
+        </ul>
+    </div>
+    <div class="rol-12" style="margin-left: 700px;">
+        <ul class="message-list">
+            {%for bl in blog%}
             <li class="message">
-                <a type="button" class="btn btn-outline-primary" href="{% url 'blog:view' bl.pk %}" style="width: 400px;">
+                <a type="button" class="btn btn-outline-primary" href="{% url 'blog:view' bl.pk %}"
+                   style="width: 400px;">
                     <span style="font-size: 18px;">{{bl.title|slice:':20' }}...</span>
                     <br>
                     <span style="font-size: 18px;">{{bl.body|slice:':50'}}...</span>
                     <br>
                 </a>
             </li>
-        {%endfor%}
-    </ul>
-  </div>
+            {%endfor%}
+        </ul>
+    </div>
 </div>
 
 <div class="text-center">

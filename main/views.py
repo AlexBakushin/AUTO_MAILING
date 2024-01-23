@@ -10,7 +10,6 @@ from django.conf import settings
 from django.core.cache import cache
 
 
-
 @login_required
 def index(request):
     if settings.CACHE_ENABLED:
@@ -32,6 +31,7 @@ def index(request):
         'all_client': all_client,
         'blog': blog_list,
     }
+
     return render(request, 'main/index.html', context)
 
 
@@ -42,6 +42,7 @@ class UserListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Пользователи'
+
         return context
 
 
@@ -52,6 +53,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'{self.object.email}'
+
         return context
 
 
@@ -65,6 +67,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = f'Изменение "{self.object.email}"'
+
         return context_data
 
 
@@ -75,6 +78,7 @@ class SettingsReportListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Отчет по рассылкам'
+
         return context
 
 
@@ -85,6 +89,7 @@ class MassageListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список сообщений'
+
         return context
 
 
@@ -95,6 +100,7 @@ class MassageDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.head
+
         return context
 
 
@@ -102,11 +108,11 @@ class MassageCreateView(LoginRequiredMixin, CreateView):
     model = Massage
     fields = ('head', 'body',)
     success_url = reverse_lazy('main:massage_list')
-    # permission_required = 'main.add_massage'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создание сообщения'
+
         return context
 
     def form_valid(self, form):
@@ -132,6 +138,7 @@ class MassageUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = f'Изменение "{self.object.head}"'
+
         return context_data
 
 
@@ -142,6 +149,7 @@ class MassageDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление "{self.object.head}"'
+
         return context
 
 
@@ -152,6 +160,7 @@ class ClientListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список клиентов'
+
         return context
 
 
@@ -162,6 +171,7 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.mail
+
         return context
 
 
@@ -169,11 +179,11 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     fields = ('first_name', 'last_name', 'sur_name', 'mail', 'description',)
     success_url = reverse_lazy('main:client_list')
-    #permission_required = 'main.add_client'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Запись клиента'
+
         return context
 
     def form_valid(self, form):
@@ -203,6 +213,7 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = f'Изменение "{self.object.mail}"'
+
         return context_data
 
 
@@ -213,6 +224,7 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление "{self.object.mail}"'
+
         return context
 
 
@@ -223,6 +235,7 @@ class SettingsListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список настроек'
+
         return context
 
 
@@ -233,6 +246,7 @@ class SettingsDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = self.object.time
+
         return context
 
 
@@ -240,11 +254,11 @@ class SettingsCreateView(LoginRequiredMixin, CreateView):
     model = Settings
     fields = ('time', 'frequency', 'client', 'massage')
     success_url = reverse_lazy('main:settings_list')
-    # permission_required = 'main.add_settings'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Создание настройки'
+
         return context
 
     def form_valid(self, form):
@@ -266,6 +280,7 @@ class SettingsCreateView(LoginRequiredMixin, CreateView):
         + проверка на админа
         """
         form = super(SettingsCreateView, self).get_form(form_class)
+
         if not self.request.user.is_superuser:
             form.fields['client'].queryset = Client.objects.filter(user=self.request.user)
             form.fields['massage'].queryset = Massage.objects.filter(user=self.request.user)
@@ -284,6 +299,7 @@ class SettingsUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = f'Изменение настройки'
+
         return context_data
 
     def get_form(self, form_class=None):
@@ -293,6 +309,7 @@ class SettingsUpdateView(LoginRequiredMixin, UpdateView):
         + проверка на админа
         """
         form = super(SettingsUpdateView, self).get_form(form_class)
+
         if not self.request.user.is_superuser:
             form.fields['client'].queryset = Client.objects.filter(user=self.request.user)
             form.fields['massage'].queryset = Massage.objects.filter(user=self.request.user)
@@ -308,4 +325,5 @@ class SettingsDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = f'Удаление настройки'
+
         return context

@@ -10,8 +10,8 @@ from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 from django.core.mail import send_mail
-
 from main.models import Settings
+
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,7 @@ def my_job():
 
                     massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
                                         response=result)
+
             setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=1)
             setting.save()
 
@@ -61,8 +62,10 @@ def my_job():
 
                     massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
                                         response=result)
+
             setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=1)
             setting.save()
+
         elif today >= setting.time and setting.status and setting.frequency == 'once_a_month':
             for client in setting.client.all():
                 massages = setting.massage.all()
@@ -80,6 +83,7 @@ def my_job():
 
                     massage.logs.create(datatime=datetime.now().astimezone(moscow_tz), status='finish',
                                         response=result)
+
             setting.time = datetime.now().astimezone(moscow_tz) + timedelta(days=30)
             setting.save()
 
